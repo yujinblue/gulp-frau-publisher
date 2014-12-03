@@ -64,6 +64,7 @@ var checkS3Repo = function ( aws, options ) {
 			if (data.Contents.length !== 0) {
 				// file exist in s3 buckets
 				cb();
+				gutil.log(gutil.colors.red('[FAILED] Files already exists in this folder.'));
 				return;
 			}
 			
