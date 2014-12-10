@@ -56,7 +56,7 @@ describe('publisher', function () {
 
 		it ( 'should call s3 with correct options', function() {
 			var stream = publisher._helper( options, 'path/' ).getStream();
-			expect( s3 ).to.be.calledWith( sinon.match.any, { uploadPath: 'path/myId/dev/myDevTag/' } )
+			expect( s3 ).to.be.calledWith( sinon.match.any, { uploadPath: 'path/myId/dev/myDevTag/' } );
 		} );
 
 	} );

@@ -3,7 +3,8 @@
 var es = require('event-stream'),
 	gulp = require('gulp'),
 	mox = require('./mock-knox'),
-	optionsValidator = require('../src/optionsValidator');
+	optionsValidator = require('../src/optionsValidator'),
+	gutil = require('gulp-util');
 
 function getOptions( key ) {
 	return optionsValidator( {
@@ -26,7 +27,8 @@ describe( 'overwrite', function() {
 		overwrite = SandboxedModule.require('../src/overwrite', {
 			requires: {
 				'event-stream': es,
-				'knox': mox
+				'knox': mox,
+				'gulp-util': gutil
 			}
 		} );
 		sinon.spy( mox, 'createClient' );
@@ -52,6 +54,8 @@ describe( 'overwrite', function() {
 			.on( 'data', dataHandler )
 			.on( 'error', function( err ) {
 				expect( dataHandler ).to.not.be.called;
+				console.log(getOptions('key-a').getUploadPath());
+				expect( err ).to.eql(new Error('No files transferred because files already exists in ' + getOptions('key-a').getUploadPath() ) );
 				done();
 			} );
 	} );
